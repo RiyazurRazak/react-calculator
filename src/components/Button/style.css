@@ -1,0 +1,10 @@
+.button__root{
+    border: none;
+    outline: none;
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+    padding: 12px;
+    font-weight: 600;
+    cursor: pointer;
+}

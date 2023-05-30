@@ -1,23 +1,40 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { useState } from "react";
+import Button from "./components/Button";
+import Screen from "./components/Screen";
+import { buttons } from "./data/buttons";
 
 function App() {
+  const [value, setValue] = useState("");
+
+  const clickHandller = (targetValue) => {
+    if (targetValue === "AC") {
+      setValue("");
+    } else if (targetValue === "⌫") {
+      setValue((prev) => prev.slice(0, -1));
+    } else if (targetValue === "=") {
+      try {
+        const output = eval(value);
+        setValue(output);
+      } catch (err) {
+        setValue("MATH ERROR");
+        console.error(err);
+      }
+    } else {
+      setValue((prev) => prev + targetValue);
+    }
+  };
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className="App-header">
+        <Screen value={value} />
+        <br />
+        <div className="panel">
+          {buttons.map((value) => (
+            <Button key={value} text={value} onClick={clickHandller} />
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
